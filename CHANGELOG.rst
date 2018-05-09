@@ -2,8 +2,8 @@
 Changelog for package urdf_sim_tutorial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.0 (2018-05-09)
+------------------
 * Add README.md.
 * 0.3.0
 * Remove r2d2.xacro
