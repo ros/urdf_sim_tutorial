@@ -2,6 +2,11 @@
 Changelog for package urdf_sim_tutorial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.5.0 (2020-05-19)
+------------------
+* Bump CMake version to avoid CMP0048 warning `#6 <https://github.com/ros/urdf_sim_tutorial/issues/6>`_
+* Contributors: David V. Lu!!, ahcorde
+
 0.4.0 (2018-05-09)
 ------------------
 * Add README.md.
