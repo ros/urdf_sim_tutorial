@@ -150,7 +150,7 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="gripper_extension">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
@@ -185,7 +185,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="${prefix}_gripper_joint">
-        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
     </transmission>
 
@@ -245,7 +245,7 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="head_swivel">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
