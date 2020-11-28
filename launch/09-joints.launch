@@ -13,6 +13,5 @@
             ns="r2d2_joint_state_controller" />
 
   <node name="r2d2_controller_spawner" pkg="controller_manager" type="spawner"
-    args="r2d2_joint_state_controller
-          --shutdown-timeout 3"/>
+    args="r2d2_joint_state_controller"/>
 </launch>
