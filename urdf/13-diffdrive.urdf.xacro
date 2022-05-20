@@ -42,6 +42,10 @@
     <xacro:default_inertial mass="10"/>
   </link>
 
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
   <xacro:macro name="wheel" params="prefix suffix reflect">
 
     <link name="${prefix}_${suffix}_wheel">
@@ -135,6 +139,15 @@
       <child link="${prefix}_base"/>
       <origin xyz="0 0 ${-leglen}" />
     </joint>
+
+    <gazebo reference="${prefix}_leg">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="${prefix}_base">
+      <material>Gazebo/White</material>
+    </gazebo>
+
     <xacro:wheel prefix="${prefix}" suffix="front" reflect="1"/>
     <xacro:wheel prefix="${prefix}" suffix="back" reflect="-1"/>
   </xacro:macro>
@@ -165,6 +178,10 @@
     </collision>
     <xacro:default_inertial mass="0.05"/>
   </link>
+
+  <gazebo reference="gripper_pole">
+    <material>Gazebo/Red</material>
+  </gazebo>
 
   <transmission name="gripper_extension_trans">
     <type>transmission_interface/SimpleTransmission</type>
@@ -259,6 +276,10 @@
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
 
+  <gazebo reference="head">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <!-- This block connects the head_swivel joint to an actuator (motor), which informs both
   simulation and visualization of the robot -->
   <transmission name="head_swivel_trans">
@@ -293,6 +314,9 @@
     <origin xyz="${.707*width+0.04} 0 ${.707*width}"/>
   </joint>
 
+  <gazebo reference="box">
+    <material>Gazebo/Blue</material>
+  </gazebo>
   <!-- Gazebo plugin for ROS Control -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
