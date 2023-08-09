@@ -248,7 +248,7 @@
 
   <gazebo>
     <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-      <parameters>$(find urdf_sim_tutorial)/config/joints.yaml</parameters>
+      <parameters>$(find urdf_sim_tutorial)/config/head.yaml</parameters>
     </plugin>
   </gazebo>
 

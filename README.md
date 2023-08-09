@@ -157,3 +157,44 @@ effort:
 
 We could continue adding transmissions for all the non-fixed joints (and we will) so that all the joints are properly published. But, there's more to life than just looking at robots. We want to control them. So, let's get another controller in here.
 
+## Joint Control
+[Here's](config/head.yaml) the next controller config we're adding.
+
+```yaml
+controller_manager:
+  ros__parameters:
+    # ... snip ...
+
+    head_controller:
+      type: forward_command_controller/ForwardCommandController
+
+head_controller:
+  ros__parameters:
+    joints:
+      - head_swivel
+    interface_name: position
+```
+
+In English, this is saying to add a new ForwardCommandController called head_controller, and then, in a new parameter namespace, specify which joints are included and that we are publishing positions. We can do this because we specified `<command_interface name="position" />` in the joint tag.
+
+Now we can launch this with the added config and another `ros2 control` command as before
+
+    ros2 launch urdf_sim_tutorial 10-head.launch.py
+
+Now Gazebo is subscribed to a new topic, and you can then control the position of the head by publishing a value in ROS.
+
+    ros2 topic pub /head_controller/commands std_msgs/msg/Float64MultiArray "data: [-0.707]"
+
+When this command is published, the position will immediately change to the specified value. This is because we did not specify any limits for the joint in our urdf. However, if we change the joint, it will move gradually.
+
+```xml
+  <joint name="head_swivel" type="continuous">
+    <parent link="base_link"/>
+    <child link="head"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 ${bodylen/2}"/>
+    <limit effort="30" velocity="1.0"/>
+  </joint>
+```
+
+    ros2 launch urdf_sim_tutorial 10-head.launch.py urdf_package_path:=urdf/11-limittransmission.urdf.xacro
