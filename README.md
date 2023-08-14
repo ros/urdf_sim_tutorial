@@ -218,14 +218,16 @@ We can launch this with
 and now we can control it with just two values, e.g.
 
     ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [0.0, 0.5]"
-```xml
-  <joint name="head_swivel" type="continuous">
-    <parent link="base_link"/>
-    <child link="head"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="0 0 ${bodylen/2}"/>
-    <limit effort="30" velocity="1.0"/>
-  </joint>
-```
 
-    ros2 launch urdf_sim_tutorial 10-head.launch.py urdf_package_path:=urdf/11-limittransmission.urdf.xacro
+## The Wheels on the Droid Go Round and Round
+To drive the robot around, we first must specify more interfaces in the `ros2_control` tag of [the URDF for each of the four wheels](urdf/13-diffdrive.urdf.xacro), however, now only the velocity command interface is required.
+
+We could specify controllers for each of the individual wheels, but where's the fun in that? Instead we want to control all the wheels together. For that, we're going to need [a lot more ROS parameters](config/diffdrive.yaml) to make use of the DiffDriveController which subscribes to a standard Twist `cmd_vel` message and moves the robot accordingly.
+
+    ros2 launch urdf_sim_tutorial 13-diffdrive.launch.py
+
+In addition to loading the above configuration, this also opens the !RobotSteering panel, allowing you to drive the R2D2 robot around, while also observing its actual behavior (in Gazebo) and it's visualized behavior (in RViz):
+
+![Gazebo with Driving Interface](doc/DrivingInterface.png)
+
+Congrats! Now you're simulating robots with URDF.
