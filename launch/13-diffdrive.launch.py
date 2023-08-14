@@ -16,7 +16,7 @@ def generate_launch_description():
 
     rvizconfig_arg = DeclareLaunchArgument(
         name="rvizconfig",
-        default_value=[FindPackageShare('urdf_tutorial'), '/rviz/urdf.rviz'],
+        default_value=[FindPackageShare('urdf_sim_tutorial'), '/rviz/odom_urdf.rviz'],
     )
 
     gazebo_launch = IncludeLaunchDescription(
