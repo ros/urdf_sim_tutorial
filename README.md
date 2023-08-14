@@ -187,7 +187,7 @@ Now Gazebo is subscribed to a new topic, and you can then control the position o
 
 When this command is published, the position will immediately change to the specified value.
 
-## Another Controller
+## Controlling Multiple Joints and Mimicking
 We can change the URDF for the Gripper joints in a similar way, but in this case, we'll associate multiple joints with one controller. The updated [ROS parameters are here](config/gripper.yaml). We also must update [the URDF to include three additional joint interfaces](urdf/12-gripper.urdf.xacro).
 
 To launch this,
@@ -205,6 +205,19 @@ Closed and retracted:
 ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [-0.4, 0.0, 0.0]"
 ```
 
+This gripper is actually set up in a way that we ALWAYS want the left gripper joint to have the same value as the right gripper joint. We can code this into the URDF and controllers with a few steps.
+
+ * Insert `<mimic joint="left_gripper_joint"/>` into the URDF definition of the `right_gripper_joint` (which is done a bit hackily in [the xacro here](urdf/12a-mimic-gripper.urdf.xacro)
+ * Insert `<param name="mimic">left_gripper_joint</param>` into the `ros2_control` joint interface for `right_gripper_joint`.
+ * In our new [control parameters](config/mimic-gripper.urdf), we only list the two joints for the gripper controller, leaving out `right_gripper_joint`.
+
+We can launch this with
+
+    roslaunch urdf_sim_tutorial 12-gripper.launch.py urdf_package_path:=urdf/12a-mimic-gripper.urdf.xacro
+
+and now we can control it with just two values, e.g.
+
+    ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [0.0, 0.5]"
 ```xml
   <joint name="head_swivel" type="continuous">
     <parent link="base_link"/>
