@@ -166,7 +166,7 @@ controller_manager:
     # ... snip ...
 
     head_controller:
-      type: forward_command_controller/ForwardCommandController
+      type: position_controllers/JointGroupPositionController
 
 head_controller:
   ros__parameters:
@@ -175,7 +175,7 @@ head_controller:
     interface_name: position
 ```
 
-In English, this is saying to add a new ForwardCommandController called head_controller, and then, in a new parameter namespace, specify which joints are included and that we are publishing positions. We can do this because we specified `<command_interface name="position" />` in the joint tag.
+In English, this is saying to add a new JointGroupPositionController called head_controller, and then, in a new parameter namespace, specify which joints are included and that we are publishing positions. We can do this because we specified `<command_interface name="position" />` in the joint tag.
 
 Now we can launch this with the added config and another `ros2 control` command as before
 
@@ -185,7 +185,25 @@ Now Gazebo is subscribed to a new topic, and you can then control the position o
 
     ros2 topic pub /head_controller/commands std_msgs/msg/Float64MultiArray "data: [-0.707]"
 
-When this command is published, the position will immediately change to the specified value. This is because we did not specify any limits for the joint in our urdf. However, if we change the joint, it will move gradually.
+When this command is published, the position will immediately change to the specified value.
+
+## Another Controller
+We can change the URDF for the Gripper joints in a similar way, but in this case, we'll associate multiple joints with one controller. The updated [ROS parameters are here](config/gripper.yaml). We also must update [the URDF to include three additional joint interfaces](urdf/12-gripper.urdf.xacro).
+
+To launch this,
+
+    ros2 launch urdf_sim_tutorial 12-gripper.launch.py
+
+We can now move the gripper with an array of three floats. Open and out:
+
+```
+ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [0.0, 0.5, 0.5]"
+```
+Closed and retracted:
+
+```
+ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [-0.4, 0.0, 0.0]"
+```
 
 ```xml
   <joint name="head_swivel" type="continuous">
