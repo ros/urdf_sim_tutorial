@@ -12,14 +12,14 @@ We can spawn the model we already created into Gazebo using `gazebo.launch.py`
 
 This launch file
 
- * Loads the urdf from [the macro tutorial](https://docs.ros.org/en/ros2_documentation/iron/Tutorials/Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html) and publishes it as a topic
- * Launches an empty gazebo world
- * Runs the script to read the urdf from the topic and spawn it in gazebo.
- * By default, the gazebo gui will also be displayed, and look like this:
+ * Loads the urdf from [the macro tutorial](https://docs.ros.org/en/ros2_documentation/iron/Tutorials/Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html) and publishes it as a topic (`/robot_description`)
+ * Launches an empty Gazebo world
+ * Runs the script to read the urdf from the topic and spawn it in Gazebo.
+ * By default, the Gazebo GUI will also be displayed, and look like this:
 
 ![Nonfunctional robot in Gazebo](doc/NonFunctional.png)
 
-However, it doesn't do anything, and is missing lots of key information that ROS would need to use this robot. Previously we had been using [joint_state_publisher](http://wiki.ros.org/joint_state_publisher) to specify the pose of each joint. However, the robot itself should provide that information in the real world or in gazebo. Yet without specifying that, Gazebo doesn't know to publish that information.
+However, it doesn't do anything, and is missing lots of key information that ROS would need to use this robot. Previously we had been using [joint_state_publisher](http://wiki.ros.org/joint_state_publisher) to specify the pose of each joint. However, the robot itself should provide that information in the real world or in Gazebo. Yet without specifying that, Gazebo doesn't know to publish that information.
 
 To get the robot to be interactive (with you and ROS), we need to specify two things: Plugins and Transmissions.
 
@@ -40,7 +40,6 @@ This is because your URDF package needs to explicitly tell Gazebo where to load 
 [The reasoning behind the exact value of the `gazebo_model_path` attribute is a separate issue](https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1500), but suffice to say, setting it to this value will work assuming
  * Your mesh filenames are specified in the URDF using the `package://package_name/possible_folder/filename.ext` syntax.
  * The meshes are installed (via CMake) into the proper share folder.
-
 
 ## Gazebo Plugin
 To get ROS 2 to interact with Gazebo, we have to dynamically link to the ROS library that will tell Gazebo what to do. Theoretically, this allows for other Robot Operating Systems to interact with Gazebo in a generic way. In practice, its just ROS.
@@ -97,13 +96,13 @@ controller_manager:
 ```
 This controller is found in the `joint_state_broadcaster` package and publishes the state of the robot's joints into ROS directly from Gazebo.
 
-In [09-joints.launch.py](launch/09-joints.launch.py) we also add a ros2_control command via `ExecuteProcess` to start this specific controller.
+In [09-joints.launch.py](launch/09-joints.launch.py) we also add a `ros2_control` command via `ExecuteProcess` to start this specific controller.
 
 You can launch this, but its still not quite there.
 
     ros2 launch urdf_sim_tutorial 09-joints.launch.py
 
-This will run the controller and in fact publish on the `/joint_states` topic....but with nothing in them.
+This will run the controller and in fact publish on the `/joint_states` topic, but with nothing in them.
 
 ```yaml
 header:
@@ -137,7 +136,7 @@ You can run this URDF with our previous launch configuration.
 
     ros2 launch urdf_sim_tutorial 09-joints.launch.py urdf_package_path:=urdf/10-firsttransmission.urdf.xacro
 
-Now, the head is displayed properly in RViz because the head joint is listed in the joint_states messages.
+Now, the head is displayed properly in RViz because the head joint is listed in the `joint_states` messages.
 
 ```yaml
 header:
@@ -175,7 +174,7 @@ head_controller:
     interface_name: position
 ```
 
-In English, this is saying to add a new JointGroupPositionController called head_controller, and then, in a new parameter namespace, specify which joints are included and that we are publishing positions. We can do this because we specified `<command_interface name="position" />` in the joint tag.
+In English, this is saying to add a new `JointGroupPositionController`called `head_controller`, and then, in a new parameter namespace, specify which joints are included and that we are publishing positions. We can do this because we specified `<command_interface name="position" />` in the joint tag.
 
 Now we can launch this with the added config and another `ros2 control` command as before
 
@@ -222,7 +221,7 @@ and now we can control it with just two values, e.g.
 ## The Wheels on the Droid Go Round and Round
 To drive the robot around, we first must specify more interfaces in the `ros2_control` tag of [the URDF for each of the four wheels](urdf/13-diffdrive.urdf.xacro), however, now only the velocity command interface is required.
 
-We could specify controllers for each of the individual wheels, but where's the fun in that? Instead we want to control all the wheels together. For that, we're going to need [a lot more ROS parameters](config/diffdrive.yaml) to make use of the DiffDriveController which subscribes to a standard Twist `cmd_vel` message and moves the robot accordingly.
+We could specify controllers for each of the individual wheels, but where's the fun in that? Instead we want to control all the wheels together. For that, we're going to need [a lot more ROS parameters](config/diffdrive.yaml) to make use of the `DiffDriveController` which subscribes to a standard Twist `cmd_vel` message and moves the robot accordingly.
 
     ros2 launch urdf_sim_tutorial 13-diffdrive.launch.py
 
