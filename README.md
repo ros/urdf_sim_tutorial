@@ -1,9 +1,9 @@
 # urdf_sim_tutorial
 See the tutorials over at http://wiki.ros.org/urdf_tutorial
 
-Please download the URDF simulation tutorial from [github](https://github.com/ros/urdf_sim_tutorial) or using a package manager, i.e. for ROS 2 Humble:
+Please download the URDF simulation tutorial from [github](https://github.com/ros/urdf_sim_tutorial) or using a package manager
 
-    sudo apt install ros-humble-urdf-sim-tutorial
+    sudo apt install ros-$ROS_DISTRO-urdf-sim-tutorial
 
 ## Nonfunctional Gazebo Interface
 We can spawn the model we already created into Gazebo using `gazebo.launch.py`
