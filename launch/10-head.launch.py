@@ -36,7 +36,7 @@ from launch.actions import IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
-from launch_ros.substitutions import FindPackageShare
+from launch_ros.substitutions import FindPackageShare, PathJoinSubstitution
 
 def generate_launch_description():
     package_arg = DeclareLaunchArgument('urdf_package',
@@ -48,11 +48,11 @@ def generate_launch_description():
 
     rvizconfig_arg = DeclareLaunchArgument(
         name="rvizconfig",
-        default_value=[FindPackageShare('urdf_tutorial'), '/rviz/urdf.rviz'],
+        default_value=PathJoinSubstitution([FindPackageShare('urdf_tutorial'), 'rviz', 'urdf.rviz']),
     )
 
     gazebo_launch = IncludeLaunchDescription(
-        [FindPackageShare('urdf_sim_tutorial'), '/launch/gazebo.launch.py'],
+        PathJoinSubstitution([FindPackageShare('urdf_sim_tutorial'), 'launch', 'gazebo.launch.py']),
         launch_arguments={
             'urdf_package': LaunchConfiguration('urdf_package'),
             'urdf_package_path': LaunchConfiguration('urdf_package_path')

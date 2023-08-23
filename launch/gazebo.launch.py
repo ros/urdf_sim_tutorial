@@ -33,7 +33,7 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
@@ -51,7 +51,7 @@ def generate_launch_description():
                                       default_value='urdf/08-macroed.urdf.xacro')
 
     empty_world_launch = IncludeLaunchDescription(
-        [FindPackageShare('gazebo_ros'), '/launch/gazebo.launch.py'],
+        PathJoinSubstitution([FindPackageShare('gazebo_ros'), 'launch', 'gazebo.launch.py']),
         launch_arguments={
             'gui': LaunchConfiguration('gui'),
             'pause': 'true',
@@ -59,7 +59,7 @@ def generate_launch_description():
     )
 
     description_launch_py = IncludeLaunchDescription(
-        [FindPackageShare('urdf_launch'), '/launch/description.launch.py'],
+        PathJoinSubstitution([FindPackageShare('urdf_launch'), 'launch', 'description.launch.py']),
         launch_arguments={
             'urdf_package': LaunchConfiguration('urdf_package'),
             'urdf_package_path': LaunchConfiguration('urdf_package_path')}.items()
