@@ -37,11 +37,12 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+
 def generate_launch_description():
     # these are the arguments you can pass this launch file, for example paused:=true
     gui_arg = DeclareLaunchArgument(
-        name="gui",
-        default_value="true",
+        name='gui',
+        default_value='true',
     )
     package_arg = DeclareLaunchArgument('urdf_package',
                                         description='The package where the robot description is located',

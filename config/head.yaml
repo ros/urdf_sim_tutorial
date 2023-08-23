@@ -12,5 +12,5 @@ controller_manager:
 head_controller:
   ros__parameters:
     joints:
-      - head_swivel
+    - head_swivel
     interface_name: position

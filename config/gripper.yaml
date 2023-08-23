@@ -15,13 +15,13 @@ controller_manager:
 head_controller:
   ros__parameters:
     joints:
-      - head_swivel
+    - head_swivel
     interface_name: position
 
 gripper_controller:
   ros__parameters:
     joints:
-      - gripper_extension
-      - left_gripper_joint
-      - right_gripper_joint
+    - gripper_extension
+    - left_gripper_joint
+    - right_gripper_joint
     interface_name: position

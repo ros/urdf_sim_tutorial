@@ -38,6 +38,7 @@ from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
 from launch_ros.substitutions import FindPackageShare, PathJoinSubstitution
 
+
 def generate_launch_description():
     package_arg = DeclareLaunchArgument('urdf_package',
                                         description='The package where the robot description is located',
@@ -47,7 +48,7 @@ def generate_launch_description():
                                       default_value='urdf/10-firsttransmission.urdf.xacro')
 
     rvizconfig_arg = DeclareLaunchArgument(
-        name="rvizconfig",
+        name='rvizconfig',
         default_value=PathJoinSubstitution([FindPackageShare('urdf_tutorial'), 'rviz', 'urdf.rviz']),
     )
 
