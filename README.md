@@ -195,14 +195,11 @@ To launch this,
 
 We can now move the gripper with an array of three floats. Open and out:
 
-```
-ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [0.0, 0.5, 0.5]"
-```
+    ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [0.0, 0.5, 0.5]"
+
 Closed and retracted:
 
-```
-ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [-0.4, 0.0, 0.0]"
-```
+    ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "data: [-0.4, 0.0, 0.0]"
 
 This gripper is actually set up in a way that we ALWAYS want the left gripper joint to have the same value as the right gripper joint. We can code this into the URDF and controllers with a few steps.
 
