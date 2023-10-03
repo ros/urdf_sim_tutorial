@@ -2,8 +2,8 @@
 Changelog for package urdf_sim_tutorial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2023-10-03)
+------------------
 * Convert Tutorial to ROS 2 (`#13 <https://github.com/ros/urdf_sim_tutorial/issues/13>`_)
 * Contributors: David V. Lu!!
 
