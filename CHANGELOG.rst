@@ -2,6 +2,11 @@
 Changelog for package urdf_sim_tutorial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Convert Tutorial to ROS 2 (`#13 <https://github.com/ros/urdf_sim_tutorial/issues/13>`_)
+* Contributors: David V. Lu!!
+
 0.5.0 (2020-05-19)
 ------------------
 * Bump CMake version to avoid CMP0048 warning `#6 <https://github.com/ros/urdf_sim_tutorial/issues/6>`_
