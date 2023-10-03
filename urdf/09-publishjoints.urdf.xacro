@@ -7,7 +7,6 @@
   <xacro:property name="bodylen" value="0.6" />
   <xacro:property name="baselen" value="0.4" />
   <xacro:property name="wheeldiam" value="0.07" />
-  <xacro:property name="pi" value="3.1415" />
 
   <material name="blue">
     <color rgba="0 0 0.8 1"/>
@@ -24,7 +23,7 @@
   <xacro:macro name="default_inertial" params="mass">
     <inertial>
       <mass value="${mass}" />
-      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+      <inertia ixx="1e-3" ixy="0.0" ixz="0.0" iyy="1e-3" iyz="0.0" izz="1e-3" />
     </inertial>
   </xacro:macro>
 
@@ -235,10 +234,16 @@
     <origin xyz="${.707*width+0.04} 0 ${.707*width}"/>
   </joint>
 
-  <!-- Gazebo plugin for ROS Control -->
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="head_swivel" />
+  </ros2_control>
+
   <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/</robotNamespace>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find urdf_sim_tutorial)/config/joints.yaml</parameters>
     </plugin>
   </gazebo>
 

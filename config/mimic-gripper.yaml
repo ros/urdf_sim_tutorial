@@ -23,5 +23,4 @@ gripper_controller:
     joints:
     - gripper_extension
     - left_gripper_joint
-    - right_gripper_joint
     interface_name: position

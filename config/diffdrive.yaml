@@ -1,30 +1,68 @@
-type: "diff_drive_controller/DiffDriveController"
-publish_rate: 50
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    use_sim_time: true
 
-left_wheel: ['left_front_wheel_joint', 'left_back_wheel_joint']
-right_wheel: ['right_front_wheel_joint', 'right_back_wheel_joint']
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
 
-wheel_separation: 0.44
+    head_controller:
+      type: position_controllers/JointGroupPositionController
 
-# Odometry covariances for the encoder output of the robot. These values should
-# be tuned to your robot's sample odometry data, but these values are a good place
-# to start
-pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
-twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+    gripper_controller:
+      type: position_controllers/JointGroupPositionController
 
-# Top level frame (link) of the robot description
-base_frame_id: base_link
+    diff_drive_base_controller:
+      type: diff_drive_controller/DiffDriveController
 
-# Velocity and acceleration limits for the robot
-linear:
-  x:
-    has_velocity_limits    : true
-    max_velocity           : 0.2   # m/s
-    has_acceleration_limits: true
-    max_acceleration       : 0.6   # m/s^2
-angular:
-  z:
-    has_velocity_limits    : true
-    max_velocity           : 2.0   # rad/s
-    has_acceleration_limits: true
-    max_acceleration       : 6.0   # rad/s^2
+head_controller:
+  ros__parameters:
+    joints:
+    - head_swivel
+    interface_name: position
+
+gripper_controller:
+  ros__parameters:
+    joints:
+    - gripper_extension
+    - left_gripper_joint
+    interface_name: position
+
+diff_drive_base_controller:
+  ros__parameters:
+
+    publish_rate: 50.0
+
+    left_wheel_names: [left_front_wheel_joint, left_back_wheel_joint]
+    right_wheel_names: [right_front_wheel_joint, right_back_wheel_joint]
+
+    wheel_separation: 0.44
+    wheel_radius: 0.035
+
+    # Odometry covariances for the encoder output of the robot. These values should
+    # be tuned to your robot's sample odometry data, but these values are a good place
+    # to start
+    pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+
+    # Top level frame (link) of the robot description
+    base_frame_id: base_link
+
+    use_stamped_vel: false
+
+    # Velocity and acceleration limits for the robot
+    linear:
+      x:
+        has_velocity_limits: true
+        max_velocity: 0.2              # m/s
+        min_velocity: -0.2             # m/s
+        has_acceleration_limits: true
+        max_acceleration: 0.6          # m/s^2
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 2.0              # rad/s
+        min_velocity: -2.0
+        has_acceleration_limits: true
+        max_acceleration: 6.0          # rad/s^2
+        min_acceleration: -1.0

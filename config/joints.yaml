@@ -1,3 +1,7 @@
-# The joint state controller handles publishing transforms for any moving joints
-type: "joint_state_controller/JointStateController"
-publish_rate: 50
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    use_sim_time: true
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster

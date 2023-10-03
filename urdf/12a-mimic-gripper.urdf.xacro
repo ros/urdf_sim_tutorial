@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="first_transmission_with_limits" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="gripper_controller" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:property name="width" value="0.2" />
   <xacro:property name="leglen" value="0.6" />
@@ -124,6 +124,8 @@
     <child link="gripper_pole"/>
     <limit effort="1000.0" lower="-${width*2-.02}" upper="0" velocity="0.5"/>
     <origin rpy="0 0 0" xyz="${width-.01} 0 0.2"/>
+    <limit effort="30" velocity="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
 
   <link name="gripper_pole">
@@ -142,13 +144,16 @@
     <xacro:default_inertial mass="0.05"/>
   </link>
 
-  <xacro:macro name="gripper" params="prefix reflect">
+  <xacro:macro name="gripper" params="prefix reflect *extra_tag">
     <joint name="${prefix}_gripper_joint" type="revolute">
+      <xacro:insert_block name="extra_tag" />
       <axis xyz="0 0 ${reflect}"/>
       <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
       <origin rpy="0 0 0" xyz="${polelen} ${reflect*0.01} 0"/>
       <parent link="gripper_pole"/>
       <child link="${prefix}_gripper"/>
+      <limit effort="30" velocity="1.0"/>
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <link name="${prefix}_gripper">
       <visual>
@@ -187,8 +192,12 @@
     </link>
   </xacro:macro>
 
-  <xacro:gripper prefix="left" reflect="1" />
-  <xacro:gripper prefix="right" reflect="-1" />
+  <xacro:gripper prefix="left" reflect="1">
+    <dynamics damping="0.0" friction="0.0"/>
+  </xacro:gripper>
+  <xacro:gripper prefix="right" reflect="-1">
+     <mimic joint="left_gripper_joint"/>
+  </xacro:gripper>
 
   <link name="head">
     <visual>
@@ -211,6 +220,7 @@
     <axis xyz="0 0 1"/>
     <origin xyz="0 0 ${bodylen/2}"/>
     <limit effort="30" velocity="1.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
 
   <link name="box">
@@ -245,11 +255,31 @@
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
+    <joint name="gripper_extension">
+      <command_interface name="position" />
+      <command_interface name="velocity" />
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="left_gripper_joint">
+      <command_interface name="position" />
+      <command_interface name="velocity" />
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="right_gripper_joint">
+      <command_interface name="position" />
+      <command_interface name="velocity" />
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <param name="mimic">left_gripper_joint</param>
+      <param name="multiplier">1</param>
+    </joint>
   </ros2_control>
 
   <gazebo>
     <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-      <parameters>$(find urdf_sim_tutorial)/config/head.yaml</parameters>
+      <parameters>$(find urdf_sim_tutorial)/config/mimic-gripper.yaml</parameters>
     </plugin>
   </gazebo>
 

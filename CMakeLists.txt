@@ -1,10 +1,8 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.5)
 project(urdf_sim_tutorial)
+find_package(ament_cmake REQUIRED)
 
-find_package(catkin REQUIRED)
-
-catkin_package()
-
-
-install(DIRECTORY config launch urdf
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+install(DIRECTORY config launch rviz urdf
+  DESTINATION share/${PROJECT_NAME}
+)
+ament_package()
