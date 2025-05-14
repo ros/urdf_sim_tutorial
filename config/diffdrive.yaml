@@ -1,8 +1,8 @@
-type: "diff_drive_controller/DiffDriveController"
+type: diff_drive_controller/DiffDriveController
 publish_rate: 50
 
-left_wheel: ['left_front_wheel_joint', 'left_back_wheel_joint']
-right_wheel: ['right_front_wheel_joint', 'right_back_wheel_joint']
+left_wheel: [left_front_wheel_joint, left_back_wheel_joint]
+right_wheel: [right_front_wheel_joint, right_back_wheel_joint]
 
 wheel_separation: 0.44
 
@@ -18,13 +18,13 @@ base_frame_id: base_link
 # Velocity and acceleration limits for the robot
 linear:
   x:
-    has_velocity_limits    : true
-    max_velocity           : 0.2   # m/s
+    has_velocity_limits: true
+    max_velocity: 0.2              # m/s
     has_acceleration_limits: true
-    max_acceleration       : 0.6   # m/s^2
+    max_acceleration: 0.6          # m/s^2
 angular:
   z:
-    has_velocity_limits    : true
-    max_velocity           : 2.0   # rad/s
+    has_velocity_limits: true
+    max_velocity: 2.0              # rad/s
     has_acceleration_limits: true
-    max_acceleration       : 6.0   # rad/s^2
+    max_acceleration: 6.0          # rad/s^2
