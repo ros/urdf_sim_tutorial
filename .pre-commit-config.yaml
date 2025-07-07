@@ -16,13 +16,13 @@ repos:
   - id: check-ast
   - id: double-quote-string-fixer
   - id: requirements-txt-fixer
-  rev: v4.4.0
+  rev: v5.0.0
 - repo: https://github.com/codespell-project/codespell
   hooks:
   - id: codespell
     args:
     - --write-changes
-  rev: v2.2.5
+  rev: v2.4.1
 - repo: https://github.com/adrienverge/yamllint
   hooks:
   - id: yamllint
@@ -30,7 +30,7 @@ repos:
     - --format
     - parsable
     - --strict
-  rev: v1.32.0
+  rev: v1.37.1
 - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
   hooks:
   - id: yamlfmt
@@ -46,13 +46,13 @@ repos:
     - --offset
     - '0'
   rev: 0.2.3
-- repo: https://github.com/pre-commit/mirrors-autopep8
+- repo: https://github.com/hhatto/autopep8
   hooks:
   - id: autopep8
-  rev: v2.0.2
+  rev: v2.3.2
 - repo: https://github.com/PyCQA/flake8
   hooks:
   - id: flake8
-  rev: 6.1.0
+  rev: 7.3.0
 ci:
   autoupdate_schedule: quarterly
