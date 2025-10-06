@@ -16,7 +16,7 @@ repos:
   - id: check-ast
   - id: double-quote-string-fixer
   - id: requirements-txt-fixer
-  rev: v5.0.0
+  rev: v6.0.0
 - repo: https://github.com/codespell-project/codespell
   hooks:
   - id: codespell
