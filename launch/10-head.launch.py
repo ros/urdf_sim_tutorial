@@ -36,7 +36,8 @@ from launch.actions import IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
-from launch_ros.substitutions import FindPackageShare, PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
+from launch.substitutions import PathJoinSubstitution
 
 
 def generate_launch_description():
